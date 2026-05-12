@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Plus, Pencil, Trash2, Upload, Loader2, Award } from 'lucide-react'
+import { ArrowLeft, Plus, Pencil, Trash2, Upload, Loader2, Award, Star } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Gallery, Photo } from '@/lib/database.types'
 import { Button } from '@/components/ui/button'
@@ -125,6 +125,16 @@ export default function AdminPhotos() {
     }
   }
 
+  async function handleSetCover(p: Photo) {
+    const { error } = await supabase.from('galleries').update({ cover_image_url: p.storage_path }).eq('id', galleryId!)
+    if (error) {
+      toast({ title: 'Error al establecer portada', variant: 'destructive' })
+    } else {
+      setGallery((g) => g ? { ...g, cover_image_url: p.storage_path } : g)
+      toast({ title: 'Imagen de portada actualizada' })
+    }
+  }
+
   async function handleDelete(p: Photo) {
     const { error } = await supabase.from('photos').delete().eq('id', p.id)
     if (error) toast({ title: 'Error al eliminar', variant: 'destructive' })
@@ -159,12 +169,25 @@ export default function AdminPhotos() {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {photos.map((p) => (
+          {photos.map((p) => {
+            const isCover = p.storage_path === gallery?.cover_image_url
+            return (
             <div key={p.id} className="group relative">
               <div className="aspect-square overflow-hidden rounded-md bg-neutral-100">
                 <img src={p.storage_path} alt={p.title_es} className="h-full w-full object-cover" />
               </div>
+              {isCover && (
+                <div className="absolute top-1.5 left-1.5 flex items-center gap-1 bg-black/60 rounded px-1.5 py-0.5">
+                  <Star className="h-3 w-3 text-yellow-400 fill-yellow-400" />
+                  <span className="text-[10px] text-white tracking-wider uppercase">Portada</span>
+                </div>
+              )}
               <div className="absolute inset-0 rounded-md bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                {!isCover && (
+                  <Button size="icon" variant="secondary" className="h-8 w-8" title="Usar como portada" onClick={() => handleSetCover(p)}>
+                    <Star className="h-3.5 w-3.5" />
+                  </Button>
+                )}
                 <Button size="icon" variant="secondary" className="h-8 w-8" onClick={() => openEdit(p)}><Pencil className="h-3.5 w-3.5" /></Button>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -185,7 +208,7 @@ export default function AdminPhotos() {
               <p className="mt-1.5 text-xs font-medium truncate">{p.title_es}</p>
               {p.awards && <div className="flex items-center gap-1 mt-0.5"><Award className="h-3 w-3 text-muted-foreground" /><p className="text-xs text-muted-foreground truncate">{p.awards}</p></div>}
             </div>
-          ))}
+          )})}
         </div>
       )}
 

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Pencil, Trash2, Images, Upload, Loader2, GripVertical } from 'lucide-react'
+import { Plus, Pencil, Trash2, Images, Loader2, GripVertical } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Gallery } from '@/lib/database.types'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { toast } from '@/hooks/use-toast'
 
-const emptyForm = { name_es: '', name_en: '', description_es: '', description_en: '', cover_image_url: '', display_order: 0 }
+const emptyForm = { name_es: '', name_en: '', description_es: '', description_en: '', display_order: 0 }
 
 export default function AdminGalleries() {
   const [galleries, setGalleries] = useState<Gallery[]>([])
@@ -19,8 +19,6 @@ export default function AdminGalleries() {
   const [editing, setEditing]     = useState<Gallery | null>(null)
   const [form, setForm]           = useState(emptyForm)
   const [saving, setSaving]       = useState(false)
-  const [uploadingCover, setUploadingCover] = useState(false)
-  const coverInputRef = useRef<HTMLInputElement>(null)
 
   function load() {
     supabase.from('galleries').select('*').order('display_order').then(({ data }) => {
@@ -38,25 +36,8 @@ export default function AdminGalleries() {
 
   function openEdit(g: Gallery) {
     setEditing(g)
-    setForm({ name_es: g.name_es, name_en: g.name_en, description_es: g.description_es ?? '', description_en: g.description_en ?? '', cover_image_url: g.cover_image_url ?? '', display_order: g.display_order })
+    setForm({ name_es: g.name_es, name_en: g.name_en, description_es: g.description_es ?? '', description_en: g.description_en ?? '', display_order: g.display_order })
     setOpen(true)
-  }
-
-  async function handleCoverUpload(file: File) {
-    if (!file.type.startsWith('image/')) return
-    setUploadingCover(true)
-    try {
-      const ext  = file.name.split('.').pop()
-      const path = `covers/cover-${Date.now()}.${ext}`
-      const { error } = await supabase.storage.from('photos').upload(path, file, { upsert: true })
-      if (error) throw error
-      const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path)
-      setForm((f) => ({ ...f, cover_image_url: publicUrl }))
-    } catch {
-      toast({ title: 'Error al subir la imagen', variant: 'destructive' })
-    } finally {
-      setUploadingCover(false)
-    }
   }
 
   async function handleSave() {
@@ -66,17 +47,20 @@ export default function AdminGalleries() {
     }
     setSaving(true)
     try {
-      const payload = {
-        name_es: form.name_es, name_en: form.name_en,
-        description_es: form.description_es || null, description_en: form.description_en || null,
-        cover_image_url: form.cover_image_url || null,
-        display_order: form.display_order,
-      }
       if (editing) {
-        await supabase.from('galleries').update(payload).eq('id', editing.id)
+        await supabase.from('galleries').update({
+          name_es: form.name_es, name_en: form.name_en,
+          description_es: form.description_es || null, description_en: form.description_en || null,
+          display_order: form.display_order,
+        }).eq('id', editing.id)
         toast({ title: 'Galería actualizada' })
       } else {
-        await supabase.from('galleries').insert(payload)
+        await supabase.from('galleries').insert({
+          name_es: form.name_es, name_en: form.name_en,
+          description_es: form.description_es || null, description_en: form.description_en || null,
+          cover_image_url: null,
+          display_order: form.display_order,
+        })
         toast({ title: 'Galería creada' })
       }
       setOpen(false)
@@ -163,25 +147,6 @@ export default function AdminGalleries() {
             <div className="space-y-1.5"><Label>Descripción (ES)</Label><Textarea value={form.description_es} onChange={(e) => setForm((f) => ({ ...f, description_es: e.target.value }))} rows={2} /></div>
             <div className="space-y-1.5"><Label>Description (EN)</Label><Textarea value={form.description_en} onChange={(e) => setForm((f) => ({ ...f, description_en: e.target.value }))} rows={2} /></div>
             <div className="space-y-1.5"><Label>Orden</Label><Input type="number" value={form.display_order} onChange={(e) => setForm((f) => ({ ...f, display_order: Number(e.target.value) }))} className="w-24" /></div>
-            <div className="space-y-1.5">
-              <Label>Imagen de portada</Label>
-              <div className="relative aspect-video w-full bg-neutral-100 rounded-md overflow-hidden border border-border cursor-pointer group" onClick={() => coverInputRef.current?.click()}>
-                {form.cover_image_url ? (
-                  <>
-                    <img src={form.cover_image_url} alt="Cover" className="h-full w-full object-cover" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                      <Upload className="h-5 w-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                  </>
-                ) : (
-                  <div className="h-full w-full flex flex-col items-center justify-center gap-2 text-muted-foreground">
-                    <Upload className="h-5 w-5" /><span className="text-xs">Subir imagen</span>
-                  </div>
-                )}
-                {uploadingCover && <div className="absolute inset-0 bg-black/40 flex items-center justify-center"><Loader2 className="h-6 w-6 text-white animate-spin" /></div>}
-              </div>
-              <input ref={coverInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleCoverUpload(f); e.target.value = '' }} />
-            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
