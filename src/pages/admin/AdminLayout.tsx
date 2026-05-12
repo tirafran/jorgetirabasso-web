@@ -18,11 +18,10 @@ function SidebarContent({ onNav, onLogout }: { onNav: () => void; onLogout: () =
         <span className="text-sm font-medium tracking-wider">Jorge Tirabasso</span>
       </div>
       <nav className="flex-1 p-3 space-y-1">
-        {navItems.map(({ to, label, icon: Icon, end }) => (
+        {navItems.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
             to={to}
-            end={end}
             onClick={onNav}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
