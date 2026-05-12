@@ -24,6 +24,11 @@ export default function AboutPage() {
         <Link to="/" className="inline-flex items-center gap-2 text-xs tracking-[0.3em] uppercase text-muted-foreground hover:text-foreground transition-colors mb-12">
           <ArrowLeft className="h-3 w-3" />{t('nav.backToHome')}
         </Link>
+        {config?.profile_image_url && (
+          <div className="mb-12">
+            <img src={config.profile_image_url} alt="Jorge Tirabasso" className="w-32 h-32 rounded-full object-cover" />
+          </div>
+        )}
         <h1 className="text-3xl font-light tracking-[0.3em] uppercase mb-12">{t('about.title')}</h1>
         {bioFull ? (
           <div>

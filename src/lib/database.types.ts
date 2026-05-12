@@ -1,12 +1,13 @@
 export interface SiteConfig {
-  id:              number
-  hero_image_url:  string | null
-  bio_short_es:    string | null
-  bio_short_en:    string | null
-  bio_full_es:     string | null
-  bio_full_en:     string | null
-  instagram_url:   string | null
-  updated_at:      string
+  id:                 number
+  hero_image_url:     string | null
+  profile_image_url:  string | null
+  bio_short_es:       string | null
+  bio_short_en:       string | null
+  bio_full_es:        string | null
+  bio_full_en:        string | null
+  instagram_url:      string | null
+  updated_at:         string
 }
 
 export interface Gallery {
