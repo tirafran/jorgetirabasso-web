@@ -21,6 +21,17 @@ export interface Gallery {
   created_at:      string
 }
 
+export interface Recognition {
+  id:           string
+  photo_url:    string | null
+  title_es:     string
+  title_en:     string
+  subtitle_es:  string | null
+  subtitle_en:  string | null
+  display_order: number
+  created_at:   string
+}
+
 export interface Photo {
   id:              string
   gallery_id:      string

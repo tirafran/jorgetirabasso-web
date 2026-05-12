@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { Image, GalleryHorizontal, Settings, LogOut, Camera, Menu, X } from 'lucide-react'
+import { Image, GalleryHorizontal, Settings, LogOut, Camera, Menu, X, Trophy } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 
 const navItems = [
-  { to: '/admin/galleries', label: 'Galerías',      icon: GalleryHorizontal },
-  { to: '/admin/hero',      label: 'Imagen Hero',   icon: Image },
-  { to: '/admin/config',    label: 'Configuración', icon: Settings },
+  { to: '/admin/galleries',     label: 'Galerías',         icon: GalleryHorizontal },
+  { to: '/admin/recognitions',  label: 'Reconocimientos',  icon: Trophy },
+  { to: '/admin/hero',          label: 'Imagen Hero',      icon: Image },
+  { to: '/admin/config',        label: 'Configuración',    icon: Settings },
 ]
 
 function SidebarContent({ onNav, onLogout }: { onNav: () => void; onLogout: () => void }) {
