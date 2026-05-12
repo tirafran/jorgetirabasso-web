@@ -101,14 +101,15 @@ export default function AdminPhotos() {
     }
   }
 
-  async function handleBulkUpload(files: FileList) {
+  async function handleBulkUpload(fileArray: File[]) {
+    const images = fileArray.filter(f => f.type.startsWith('image/'))
+    if (images.length === 0) return
     setUploadingMultiple(true)
     let count = 0
     let errors = 0
     const baseOrder = photos.length
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i]
-      if (!file.type.startsWith('image/')) continue
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i]
       try {
         const ext  = file.name.split('.').pop()
         const path = `galleries/${galleryId}/${Date.now()}-${i}.${ext}`
@@ -170,7 +171,7 @@ export default function AdminPhotos() {
         </div>
       </div>
 
-      <input ref={multiInputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { if (e.target.files?.length) handleBulkUpload(e.target.files); e.target.value = '' }} />
+      <input ref={multiInputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { const arr = Array.from(e.target.files ?? []); e.target.value = ''; if (arr.length) handleBulkUpload(arr) }} />
 
       {photos.length === 0 ? (
         <div className="border-2 border-dashed border-border rounded-lg py-20 flex flex-col items-center gap-4 text-muted-foreground cursor-pointer hover:border-foreground/30 transition-colors" onClick={() => multiInputRef.current?.click()}>
