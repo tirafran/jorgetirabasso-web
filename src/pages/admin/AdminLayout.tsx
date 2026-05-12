@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Image, GalleryHorizontal, Settings, LogOut, Camera, Menu, X } from 'lucide-react'
+import { Image, GalleryHorizontal, Settings, LogOut, Camera, Menu, X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 
 const navItems = [
-  { to: '/admin',           label: 'Dashboard',     icon: LayoutDashboard, end: true },
-  { to: '/admin/hero',      label: 'Imagen Hero',   icon: Image },
   { to: '/admin/galleries', label: 'Galerías',      icon: GalleryHorizontal },
+  { to: '/admin/hero',      label: 'Imagen Hero',   icon: Image },
   { to: '/admin/config',    label: 'Configuración', icon: Settings },
 ]
 

@@ -5,7 +5,6 @@ import GalleryPage from './pages/public/GalleryPage'
 import AboutPage from './pages/public/AboutPage'
 import AdminLoginPage from './pages/admin/AdminLoginPage'
 import AdminLayout from './pages/admin/AdminLayout'
-import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminHero from './pages/admin/AdminHero'
 import AdminGalleries from './pages/admin/AdminGalleries'
 import AdminPhotos from './pages/admin/AdminPhotos'
@@ -28,7 +27,7 @@ export default function App() {
 
           {/* Admin protected */}
           <Route path="/admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
-            <Route index element={<AdminDashboard />} />
+            <Route index element={<Navigate to="/admin/galleries" replace />} />
             <Route path="hero" element={<AdminHero />} />
             <Route path="galleries" element={<AdminGalleries />} />
             <Route path="galleries/:id/photos" element={<AdminPhotos />} />
