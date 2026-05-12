@@ -132,8 +132,8 @@ export default function AdminPhotos() {
   }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6 sm:mb-8">
         <div>
           <Button variant="ghost" size="sm" asChild className="mb-3 -ml-2 text-muted-foreground">
             <Link to="/admin/galleries"><ArrowLeft className="h-4 w-4" /> Galerías</Link>
@@ -141,7 +141,7 @@ export default function AdminPhotos() {
           <h1 className="text-2xl font-light tracking-wider mb-1">{gallery?.name_es ?? '…'}</h1>
           <p className="text-sm text-muted-foreground">{photos.length} foto{photos.length !== 1 ? 's' : ''}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={() => multiInputRef.current?.click()} disabled={uploadingMultiple}>
             {uploadingMultiple ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
             {uploadingMultiple ? 'Subiendo…' : 'Subida múltiple'}

@@ -50,7 +50,7 @@ export default function AdminConfig() {
   )
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 sm:p-8 max-w-2xl">
       <h1 className="text-2xl font-light tracking-wider mb-2">Configuración del sitio</h1>
       <p className="text-sm text-muted-foreground mb-8">Textos biográficos e Instagram</p>
 

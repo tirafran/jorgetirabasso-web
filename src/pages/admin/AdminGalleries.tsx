@@ -95,8 +95,8 @@ export default function AdminGalleries() {
   }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
         <div>
           <h1 className="text-2xl font-light tracking-wider mb-1">Galerías</h1>
           <p className="text-sm text-muted-foreground">{galleries.length} galería{galleries.length !== 1 ? 's' : ''}</p>
@@ -123,9 +123,12 @@ export default function AdminGalleries() {
                 <p className="text-xs text-muted-foreground">{g.name_en}</p>
                 {g.description_es && <p className="text-xs text-muted-foreground mt-0.5 truncate">{g.description_es}</p>}
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <Button variant="ghost" size="sm" asChild>
+              <div className="flex items-center gap-1 shrink-0">
+                <Button variant="ghost" size="sm" asChild className="hidden sm:flex">
                   <Link to={`/admin/galleries/${g.id}/photos`}><Images className="h-4 w-4" /> Fotos</Link>
+                </Button>
+                <Button variant="ghost" size="icon" asChild className="sm:hidden">
+                  <Link to={`/admin/galleries/${g.id}/photos`}><Images className="h-4 w-4" /></Link>
                 </Button>
                 <Button variant="ghost" size="icon" onClick={() => openEdit(g)}><Pencil className="h-4 w-4" /></Button>
                 <AlertDialog>

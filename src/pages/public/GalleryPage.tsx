@@ -76,7 +76,7 @@ export default function GalleryPage() {
               <ChevronLeft className="h-8 w-8" />
             </button>
           )}
-          <div className="flex flex-col lg:flex-row items-center gap-8 px-16 max-h-screen max-w-6xl w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8 px-12 max-h-screen max-w-6xl w-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <img src={currentPhoto.storage_path} alt={lang === 'es' ? currentPhoto.title_es : currentPhoto.title_en} className="max-h-[75vh] max-w-full lg:max-w-[70%] object-contain" />
             <div className="text-white min-w-0 lg:max-w-xs">
               <h2 className="text-xl font-light tracking-widest uppercase mb-3">

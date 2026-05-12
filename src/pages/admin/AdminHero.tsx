@@ -35,7 +35,7 @@ export default function AdminHero() {
   }
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 sm:p-8 max-w-2xl">
       <h1 className="text-2xl font-light tracking-wider mb-2">Imagen Hero</h1>
       <p className="text-sm text-muted-foreground mb-8">Esta imagen ocupa toda la pantalla en la portada del sitio.</p>
 

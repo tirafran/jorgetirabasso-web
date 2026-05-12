@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       <h1 className="text-2xl font-light tracking-wider mb-2">Panel de control</h1>
       <p className="text-sm text-muted-foreground mb-10">Gestión del sitio de Jorge Tirabasso</p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
