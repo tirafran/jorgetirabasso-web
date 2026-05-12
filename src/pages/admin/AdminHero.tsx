@@ -40,7 +40,7 @@ export default function AdminHero() {
       <p className="text-sm text-muted-foreground mb-8">Esta imagen ocupa toda la pantalla en la portada del sitio.</p>
 
       <div
-        className="relative aspect-video w-full bg-neutral-100 rounded-lg overflow-hidden mb-6 border border-border cursor-pointer group"
+        className="relative aspect-video w-full bg-muted rounded-lg overflow-hidden mb-6 border border-border cursor-pointer group"
         onClick={() => inputRef.current?.click()}
       >
         {currentUrl ? (

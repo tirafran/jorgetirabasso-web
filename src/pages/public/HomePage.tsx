@@ -33,7 +33,7 @@ export default function HomePage() {
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${heroLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
         ) : (
-          <div className="absolute inset-0 bg-neutral-900" />
+          <div className="absolute inset-0 bg-background" />
         )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative flex h-full flex-col items-center justify-center text-white">
@@ -84,12 +84,12 @@ function GalleryCard({ gallery, lang }: { gallery: Gallery; lang: 'es' | 'en' })
 
   return (
     <Link to={`/gallery/${gallery.id}`} className="group block overflow-hidden">
-      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         {gallery.cover_image_url ? (
           <img src={gallery.cover_image_url} alt={name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         ) : (
-          <div className="h-full w-full bg-neutral-200 flex items-center justify-center">
-            <span className="text-neutral-400 text-xs tracking-widest uppercase">Sin imagen</span>
+          <div className="h-full w-full bg-muted flex items-center justify-center">
+            <span className="text-muted-foreground text-xs tracking-widest uppercase">Sin imagen</span>
           </div>
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />

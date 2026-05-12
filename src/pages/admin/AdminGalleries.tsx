@@ -97,10 +97,10 @@ export default function AdminGalleries() {
         <div className="divide-y divide-border border border-border rounded-lg overflow-hidden">
           {galleries.map((g) => (
             <div key={g.id} className="flex items-center gap-4 p-4 bg-background hover:bg-accent/30 transition-colors">
-              <div className="w-16 h-12 rounded bg-neutral-100 overflow-hidden shrink-0">
+              <div className="w-16 h-12 rounded bg-muted overflow-hidden shrink-0">
                 {g.cover_image_url
                   ? <img src={g.cover_image_url} alt={g.name_es} className="h-full w-full object-cover" />
-                  : <div className="h-full w-full flex items-center justify-center text-neutral-300"><Images className="h-5 w-5" /></div>}
+                  : <div className="h-full w-full flex items-center justify-center text-muted-foreground"><Images className="h-5 w-5" /></div>}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm">{g.name_es}</p>

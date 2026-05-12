@@ -54,7 +54,7 @@ export default function GalleryPage() {
 
         <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-4 pb-20">
           {photos.map((photo, index) => (
-            <button key={photo.id} onClick={() => setLightboxIndex(index)} className="group relative aspect-square overflow-hidden bg-neutral-100 focus:outline-none">
+            <button key={photo.id} onClick={() => setLightboxIndex(index)} className="group relative aspect-square overflow-hidden bg-muted focus:outline-none">
               <img src={photo.storage_path} alt={lang === 'es' ? photo.title_es : photo.title_en} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end p-3">
                 <p className="text-white text-xs tracking-wider opacity-0 group-hover:opacity-100 transition-opacity line-clamp-1">

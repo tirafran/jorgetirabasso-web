@@ -184,7 +184,7 @@ export default function AdminPhotos() {
             const isCover = p.storage_path === gallery?.cover_image_url
             return (
             <div key={p.id} className="group relative">
-              <div className="aspect-square overflow-hidden rounded-md bg-neutral-100">
+              <div className="aspect-square overflow-hidden rounded-md bg-muted">
                 <img src={p.storage_path} alt={p.title_es} className="h-full w-full object-cover" />
               </div>
               {isCover && (
@@ -227,7 +227,7 @@ export default function AdminPhotos() {
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader><DialogTitle>{editing ? 'Editar foto' : 'Agregar foto'}</DialogTitle></DialogHeader>
           <div className="space-y-4 py-2">
-            <div className="relative aspect-video w-full bg-neutral-100 rounded-md overflow-hidden border border-border cursor-pointer group" onClick={() => !editing && fileInputRef.current?.click()}>
+            <div className="relative aspect-video w-full bg-muted rounded-md overflow-hidden border border-border cursor-pointer group" onClick={() => !editing && fileInputRef.current?.click()}>
               {photoPreview
                 ? <img src={photoPreview} alt="Preview" className="h-full w-full object-cover" />
                 : <div className="h-full w-full flex flex-col items-center justify-center gap-2 text-muted-foreground"><Upload className="h-5 w-5" /><span className="text-xs">Seleccionar imagen</span></div>}
