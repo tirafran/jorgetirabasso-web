@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, Instagram } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
+import remarkBreaks from 'remark-breaks'
 import { supabase } from '@/lib/supabase'
 import type { SiteConfig, Recognition } from '@/lib/database.types'
 import Navbar from '@/components/public/Navbar'
@@ -38,7 +39,7 @@ export default function AboutPage() {
 
         {bioFull ? (
           <div className="prose prose-invert prose-base max-w-none prose-p:font-light prose-p:leading-8 prose-p:text-foreground/80 prose-headings:font-light prose-headings:tracking-wider prose-strong:text-foreground prose-a:text-foreground">
-            <ReactMarkdown>{bioFull}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkBreaks]}>{bioFull}</ReactMarkdown>
           </div>
         ) : (
           <p className="text-muted-foreground text-sm">—</p>
