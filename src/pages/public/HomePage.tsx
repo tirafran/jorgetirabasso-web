@@ -35,7 +35,7 @@ export default function HomePage() {
         ) : (
           <div className="absolute inset-0 bg-background" />
         )}
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative flex h-full flex-col items-center justify-center text-white">
           <h1 className="text-5xl font-light tracking-[0.3em] uppercase md:text-7xl">Jorge Tirabasso</h1>
           <p className="mt-4 text-sm tracking-[0.5em] uppercase opacity-80">Fotografía</p>
