@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center font-sans">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
           <h1 className="text-2xl font-light tracking-[0.3em] uppercase">Backoffice</h1>

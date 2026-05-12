@@ -58,7 +58,7 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background font-sans">
       {/* Desktop sidebar */}
       <aside className="hidden md:flex w-56 border-r border-border flex-col shrink-0">
         <SidebarContent onNav={() => {}} onLogout={handleLogout} />
