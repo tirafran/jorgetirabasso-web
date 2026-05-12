@@ -104,24 +104,34 @@ export default function AdminPhotos() {
   async function handleBulkUpload(files: FileList) {
     setUploadingMultiple(true)
     let count = 0
+    let errors = 0
+    const baseOrder = photos.length
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       if (!file.type.startsWith('image/')) continue
       try {
         const ext  = file.name.split('.').pop()
-        const url  = await uploadToStorage(file, `galleries/${galleryId}/${Date.now()}-${i}.${ext}`)
+        const path = `galleries/${galleryId}/${Date.now()}-${i}.${ext}`
+        const url  = await uploadToStorage(file, path)
         const name = file.name.replace(/\.[^.]+$/, '')
-        await supabase.from('photos').insert({
+        const { error } = await supabase.from('photos').insert({
           gallery_id: galleryId!, title_es: name, title_en: name,
-          storage_path: url, display_order: photos.length + count,
+          storage_path: url, display_order: baseOrder + count,
         })
+        if (error) throw error
         count++
-      } catch { /* continue */ }
+      } catch (err) {
+        errors++
+        console.error('Error subiendo foto:', err)
+      }
     }
     setUploadingMultiple(false)
     if (count > 0) {
-      toast({ title: `${count} foto${count !== 1 ? 's' : ''} subida${count !== 1 ? 's' : ''}` })
+      toast({ title: `${count} foto${count !== 1 ? 's' : ''} subida${count !== 1 ? 's' : ''} correctamente` })
       load()
+    }
+    if (errors > 0) {
+      toast({ title: `${errors} foto${errors !== 1 ? 's' : ''} no se pudo${errors !== 1 ? 'ieron' : ''} subir`, variant: 'destructive' })
     }
   }
 
