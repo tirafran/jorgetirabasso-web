@@ -22,6 +22,7 @@ const resources = {
         title: 'Sobre el fotógrafo',
         knowMore: 'Conocer más',
         instagram: 'Seguir en Instagram',
+        recognitions: 'Reconocimientos',
       },
       photo: {
         awards: 'Premios',
@@ -52,6 +53,7 @@ const resources = {
         title: 'About the photographer',
         knowMore: 'Know more',
         instagram: 'Follow on Instagram',
+        recognitions: 'Recognitions',
       },
       photo: {
         awards: 'Awards',
