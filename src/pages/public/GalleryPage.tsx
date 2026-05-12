@@ -76,25 +76,35 @@ export default function GalleryPage() {
               <ChevronLeft className="h-8 w-8" />
             </button>
           )}
-          <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8 px-12 max-h-screen max-w-6xl w-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <img src={currentPhoto.storage_path} alt={lang === 'es' ? currentPhoto.title_es : currentPhoto.title_en} className="max-h-[75vh] max-w-full lg:max-w-[70%] object-contain" />
-            <div className="text-white min-w-0 lg:max-w-xs">
-              <h2 className="text-xl font-light tracking-widest uppercase mb-3">
+          <div className="flex flex-col md:flex-row items-start gap-6 px-12 py-8 max-h-screen max-w-6xl w-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            {/* Foto + pie de foto */}
+            <div className="flex-1 min-w-0 flex flex-col gap-3">
+              <img src={currentPhoto.storage_path} alt={lang === 'es' ? currentPhoto.title_es : currentPhoto.title_en} className="max-h-[70vh] max-w-full object-contain self-start" />
+              <h2 className="text-base font-light tracking-widest uppercase text-white">
                 {lang === 'es' ? currentPhoto.title_es : currentPhoto.title_en}
               </h2>
-              {(lang === 'es' ? currentPhoto.description_es : currentPhoto.description_en) && (
-                <p className="text-sm text-white/70 leading-relaxed mb-4">
-                  {lang === 'es' ? currentPhoto.description_es : currentPhoto.description_en}
-                </p>
-              )}
               {currentPhoto.awards && (
                 <div className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-white/50 mt-0.5 shrink-0" />
                   <p className="text-xs text-white/60 leading-relaxed">{currentPhoto.awards}</p>
                 </div>
               )}
-              <p className="mt-6 text-xs text-white/30 tracking-widest">{lightboxIndex + 1} {t('photo.of')} {photos.length}</p>
+              <p className="text-xs text-white/30 tracking-widest">{lightboxIndex + 1} {t('photo.of')} {photos.length}</p>
+              {/* Descripción en mobile */}
+              {(lang === 'es' ? currentPhoto.description_es : currentPhoto.description_en) && (
+                <p className="md:hidden text-sm text-white/60 leading-relaxed">
+                  {lang === 'es' ? currentPhoto.description_es : currentPhoto.description_en}
+                </p>
+              )}
             </div>
+            {/* Descripción en desktop — columna derecha */}
+            {(lang === 'es' ? currentPhoto.description_es : currentPhoto.description_en) && (
+              <div className="hidden md:flex w-56 shrink-0 self-stretch items-center">
+                <p className="text-sm text-white/60 leading-relaxed">
+                  {lang === 'es' ? currentPhoto.description_es : currentPhoto.description_en}
+                </p>
+              </div>
+            )}
           </div>
           {photos.length > 1 && (
             <button onClick={(e) => { e.stopPropagation(); next() }} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors z-10 p-2">
