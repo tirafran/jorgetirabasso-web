@@ -67,7 +67,7 @@ export default function AboutPage() {
           <div className="mt-20">
             <h2 className="text-xl font-light tracking-[0.3em] uppercase mb-10">{t('about.recognitions')}</h2>
             <div className="space-y-8">
-              {recognitions.map((r, idx) => {
+              {recognitions.map((r) => {
                 const photoIdx = withPhoto.indexOf(r)
                 return (
                   <div key={r.id} className="flex items-center gap-6">
