@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 import { Instagram, ChevronDown } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { SiteConfig, Gallery } from '@/lib/database.types'
 import Navbar from '@/components/public/Navbar'
+
+const SITE_URL = 'https://www.jorgetirabasso.com.ar'
 
 export default function HomePage() {
   const { t, i18n } = useTranslation()
@@ -20,9 +23,23 @@ export default function HomePage() {
   }, [])
 
   const bioShort = config ? (lang === 'es' ? config.bio_short_es : config.bio_short_en) : null
+  const title = 'Jorge Tirabasso — Fotografía'
+  const description = bioShort || (lang === 'es' ? 'Fotografía artística de Jorge Tirabasso' : 'Fine art photography by Jorge Tirabasso')
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={SITE_URL} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={SITE_URL} />
+        {config?.hero_image_url && <meta property="og:image" content={config.hero_image_url} />}
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {config?.hero_image_url && <meta name="twitter:image" content={config.hero_image_url} />}
+      </Helmet>
       <section className="relative h-screen w-full overflow-hidden">
         <Navbar transparent />
         {config?.hero_image_url ? (

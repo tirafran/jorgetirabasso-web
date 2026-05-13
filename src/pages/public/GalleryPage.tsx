@@ -1,10 +1,13 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 import { ArrowLeft, X, ChevronLeft, ChevronRight, Award } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Gallery, Photo } from '@/lib/database.types'
 import Navbar from '@/components/public/Navbar'
+
+const SITE_URL = 'https://www.jorgetirabasso.com.ar'
 
 export default function GalleryPage() {
   const { id } = useParams<{ id: string }>()
@@ -39,8 +42,23 @@ export default function GalleryPage() {
   const galleryDesc = gallery ? (lang === 'es' ? gallery.description_es : gallery.description_en) : ''
   const currentPhoto = lightboxIndex !== null ? photos[lightboxIndex] : null
 
+  const title       = galleryName ? `${galleryName} — Jorge Tirabasso` : 'Jorge Tirabasso — Fotografía'
+  const description = galleryDesc || (lang === 'es' ? 'Galería de fotografías de Jorge Tirabasso.' : 'Photo gallery by Jorge Tirabasso.')
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={`${SITE_URL}/gallery/${id}`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`${SITE_URL}/gallery/${id}`} />
+        {gallery?.cover_image_url && <meta property="og:image" content={gallery.cover_image_url} />}
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {gallery?.cover_image_url && <meta name="twitter:image" content={gallery.cover_image_url} />}
+      </Helmet>
       <Navbar />
       <div className="pt-20 px-6 max-w-7xl mx-auto">
         <div className="py-10">

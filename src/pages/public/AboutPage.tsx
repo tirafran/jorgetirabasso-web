@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
 import { ArrowLeft, Instagram, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
 import { supabase } from '@/lib/supabase'
 import type { SiteConfig, Recognition } from '@/lib/database.types'
 import Navbar from '@/components/public/Navbar'
+
+const SITE_URL = 'https://www.jorgetirabasso.com.ar'
 
 export default function AboutPage() {
   const { t, i18n } = useTranslation()
@@ -36,11 +39,27 @@ export default function AboutPage() {
     return () => window.removeEventListener('keydown', handler)
   }, [lightboxIndex, prev, next])
 
-  const bioFull = config ? (lang === 'es' ? config.bio_full_es : config.bio_full_en) : ''
-  const current = lightboxIndex !== null ? withPhoto[lightboxIndex] : null
+  const bioFull  = config ? (lang === 'es' ? config.bio_full_es  : config.bio_full_en)  : ''
+  const bioShort = config ? (lang === 'es' ? config.bio_short_es : config.bio_short_en) : null
+  const current  = lightboxIndex !== null ? withPhoto[lightboxIndex] : null
+
+  const title       = lang === 'es' ? 'Sobre mí — Jorge Tirabasso' : 'About — Jorge Tirabasso'
+  const description = bioShort || (lang === 'es' ? 'Conocé a Jorge Tirabasso, fotógrafo argentino.' : 'Meet Jorge Tirabasso, Argentine photographer.')
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={`${SITE_URL}/about`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`${SITE_URL}/about`} />
+        {config?.profile_image_url && <meta property="og:image" content={config.profile_image_url} />}
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {config?.profile_image_url && <meta name="twitter:image" content={config.profile_image_url} />}
+      </Helmet>
       <Navbar />
       <div className="pt-32 pb-20 px-6 max-w-3xl mx-auto">
         <Link to="/" className="inline-flex items-center gap-2 text-xs tracking-[0.3em] uppercase text-muted-foreground hover:text-foreground transition-colors mb-12">
