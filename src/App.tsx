@@ -6,7 +6,6 @@ import AboutPage from './pages/public/AboutPage'
 import AdminLoginPage from './pages/admin/AdminLoginPage'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminHero from './pages/admin/AdminHero'
-import AdminRecognitions from './pages/admin/AdminRecognitions'
 import AdminGalleries from './pages/admin/AdminGalleries'
 import AdminPhotos from './pages/admin/AdminPhotos'
 import AdminConfig from './pages/admin/AdminConfig'
@@ -32,7 +31,7 @@ export default function App() {
             <Route path="hero" element={<AdminHero />} />
             <Route path="galleries" element={<AdminGalleries />} />
             <Route path="galleries/:id/photos" element={<AdminPhotos />} />
-            <Route path="recognitions" element={<AdminRecognitions />} />
+            <Route path="recognitions" element={<Navigate to="/admin/config" replace />} />
             <Route path="config" element={<AdminConfig />} />
           </Route>
 
